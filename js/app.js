@@ -7,7 +7,7 @@ let missed = 0;
 const phrases = [
   "JavaScript is awesome",
   "Zowie is swole",
-  "I will be a software developer",
+  "I will become a software developer",
   "A hundred days of code",
   "This app is pretty cool",
 ];
@@ -22,12 +22,19 @@ function getRandomPhraseAsArray(arr) {
   return characterSpread;
 }
 
-console.log(getRandomPhraseAsArray(phrases));
-
 function addPhraseToDisplay(arr) {
+  const ul = document.querySelector("#phrase ul");
   for (let i = 0; i < arr.length; i++) {
-    const characters = arr[i];
-    console.log(characters);
+    const character = arr[i];
+    for (let i = 0; i < character.length; i++) {
+      const li = document.createElement("li");
+      li.textContent = character;
+      ul.appendChild(li);
+      if (character.toUpperCase() != character.toLowerCase()) {
+        li.className = "letter";
+      }
+    }
+    // console.log(character);
   }
 }
 
