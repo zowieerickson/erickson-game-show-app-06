@@ -37,11 +37,16 @@ function addPhraseToDisplay(arr) {
   }
 }
 
+const phraseArray = getRandomPhraseAsArray(phrases);
+addPhraseToDisplay(phraseArray);
+
 function checkLetter(btn) {
+  const li = document.querySelectorAll("li");
   const characters = document.getElementsByClassName("letter");
   for (let i = 0; i < characters.length; i++) {
     const character = characters[i];
-    if (character == btn.textContent) {
+    console.log(character);
+    if (character.textContent === btn.textContent) {
       li.classList.add("show");
       const matchingCharacter = character; // Not sure if this works
       return matchingCharacter; // Same, not sure if will work if the one on top doesn't work
@@ -51,5 +56,14 @@ function checkLetter(btn) {
   }
 }
 
-const phraseArray = getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(phraseArray);
+qwerty.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    const button = e.target;
+    button.classList.add("chosen");
+    // console.log(button);
+    if (button.className == "chosen") {
+      button.disabled = true;
+    }
+    checkLetter(button);
+  }
+});
