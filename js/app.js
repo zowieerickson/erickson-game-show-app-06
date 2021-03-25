@@ -41,13 +41,16 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
 
 function checkLetter(btn) {
-  const li = document.querySelectorAll("li");
+  const li = document.querySelectorAll("ul li");
   const characters = document.getElementsByClassName("letter");
   for (let i = 0; i < characters.length; i++) {
     const character = characters[i];
-    console.log(character);
-    if (character.textContent === btn.textContent) {
-      li.classList.add("show");
+    const char = character.textContent.toLowerCase();
+    console.log(char);
+    console.log(btn.textContent);
+    if (char.textContent === btn.textContent) {
+      li.className("show");
+      character.className("show");
       const matchingCharacter = character; // Not sure if this works
       return matchingCharacter; // Same, not sure if will work if the one on top doesn't work
     } else {
