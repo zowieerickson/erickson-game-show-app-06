@@ -1,16 +1,17 @@
 const overlay = document.getElementById("overlay");
 const btnReset = document.querySelector("a.btn__reset");
 const phrase = document.getElementById("phrase");
-const qwerty = document.getElementById("qwerty");
+const keyboard = document.getElementById("qwerty");
 const ul = document.querySelector("#phrase ul");
+
 let missed = 0;
 
 const phrases = [
-  "JavaScript is awesome",
-  "Zowie is swole",
-  "I will become a software developer",
-  "A hundred days of code",
-  "This app is pretty cool",
+  "javascript is awesome",
+  "zowie is swole",
+  "i will become a software developer",
+  "a hundred days of code",
+  "this app is pretty cool",
 ];
 
 btnReset.addEventListener("click", () => {
@@ -32,6 +33,8 @@ function addPhraseToDisplay(arr) {
       ul.appendChild(li);
       if (character.toUpperCase() != character.toLowerCase()) {
         li.className = "letter";
+      } else {
+        li.className = "space";
       }
     }
   }
@@ -41,32 +44,40 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
 
 function checkLetter(btn) {
-  const li = document.querySelectorAll("ul li");
   const characters = document.getElementsByClassName("letter");
+  let matchingCharacter = null;
   for (let i = 0; i < characters.length; i++) {
     const character = characters[i];
-    const char = character.textContent.toLowerCase();
-    console.log(char);
-    console.log(btn.textContent);
-    if (char.textContent === btn.textContent) {
-      li.className("show");
-      character.className("show");
-      const matchingCharacter = character; // Not sure if this works
-      return matchingCharacter; // Same, not sure if will work if the one on top doesn't work
-    } else {
-      return null;
+    if (character.textContent === btn.textContent) {
+      character.classList.add("show");
+      matchingCharacter = btn.textContent;
     }
   }
+  return matchingCharacter;
 }
 
-qwerty.addEventListener("click", (e) => {
+// Check for user`s actual keyboard later also
+keyboard.addEventListener("click", (e) => {
+  const button = e.target;
   if (e.target.tagName === "BUTTON") {
-    const button = e.target;
     button.classList.add("chosen");
-    // console.log(button);
-    if (button.className == "chosen") {
-      button.disabled = true;
+    button.disabled = true;
+    const letterFound = checkLetter(button);
+    const hearts = document.getElementsByClassName("tries");
+    const heartsOL = hearts.parentNode;
+
+    if (!letterFound) {
+      missed++;
+      heartsOL.removeChild(hearts);
     }
-    checkLetter(button);
   }
+
+  // for (let i = 0; i < hearts.length; i++) {
+  //   console.log(letterFound);
+  //   if (letterFound) {
+  //     missed++;
+  //     console.log("missed");
+  //     hearts[i].remove();
+  //   }
+  // }
 });
