@@ -3,6 +3,7 @@ const btnReset = document.querySelector("a.btn__reset");
 const phrase = document.getElementById("phrase");
 const keyboard = document.getElementById("qwerty");
 const ul = document.querySelector("#phrase ul");
+let scoreboard = document.querySelector("#scoreboard ol");
 
 let missed = 0;
 
@@ -63,21 +64,21 @@ keyboard.addEventListener("click", (e) => {
     button.classList.add("chosen");
     button.disabled = true;
     const letterFound = checkLetter(button);
-    const hearts = document.getElementsByClassName("tries");
-    const heartsOL = hearts.parentNode;
-
+    let heart = document.querySelector("ol li:last-child");
     if (!letterFound) {
       missed++;
-      heartsOL.removeChild(hearts);
+      console.log(missed);
+      scoreboard.removeChild(heart);
     }
+    checkWin();
   }
-
-  // for (let i = 0; i < hearts.length; i++) {
-  //   console.log(letterFound);
-  //   if (letterFound) {
-  //     missed++;
-  //     console.log("missed");
-  //     hearts[i].remove();
-  //   }
-  // }
 });
+
+function checkWin() {
+  const show = document.getElementsByClassName("show");
+  const letters = document.getElementsByClassName("letters");
+  if (missed >= 5) {
+    overlay.style.display = "block";
+    overlay.classList.add("lose");
+  }
+}
