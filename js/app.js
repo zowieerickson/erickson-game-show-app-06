@@ -67,7 +67,6 @@ keyboard.addEventListener("click", (e) => {
     let heart = document.querySelector("ol li:last-child");
     if (!letterFound) {
       missed++;
-      console.log(missed);
       scoreboard.removeChild(heart);
     }
     checkWin();
@@ -76,8 +75,13 @@ keyboard.addEventListener("click", (e) => {
 
 function checkWin() {
   const show = document.getElementsByClassName("show");
-  const letters = document.getElementsByClassName("letters");
-  if (missed >= 5) {
+  const letter = document.getElementsByClassName("letter");
+  console.log(show.length);
+  console.log(letter.length);
+  if (show.length == letter.length) {
+    overlay.style.display = "block";
+    overlay.classList.add("win");
+  } else if (missed >= 5) {
     overlay.style.display = "block";
     overlay.classList.add("lose");
   }
