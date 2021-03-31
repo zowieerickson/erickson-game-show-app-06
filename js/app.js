@@ -3,8 +3,8 @@ const btnReset = document.querySelector("a.btn__reset");
 const phrase = document.getElementById("phrase");
 const keyboard = document.getElementById("qwerty");
 const ul = document.querySelector("#phrase ul");
+// let hearts = document.querySelectorAll('ol li')
 let scoreboard = document.querySelector("#scoreboard ol");
-
 let missed = 0;
 
 const phrases = [
@@ -81,6 +81,23 @@ keyboard.addEventListener("click", (e) => {
   }
 });
 
+function insertHearts() {
+  let heart = document.querySelector("ol li:last-child");
+  const heartClone = heart.cloneNode(true);
+  heartClone.classList.add("right_margin");
+  scoreboard.insertBefore(heartClone, heart);
+}
+
+function insertHeartsLose() {
+  const li = document.createElement("li");
+  li.classList.add("tries");
+  li.classList.add("right_margin");
+  const img = document.createElement("img");
+  img.src = "images/liveHeart.png";
+  li.appendChild(img);
+  scoreboard.appendChild(li);
+}
+
 function checkWin() {
   const show = document.getElementsByClassName("show");
   const letter = document.getElementsByClassName("letter");
@@ -88,14 +105,51 @@ function checkWin() {
   const winOrLose = document.getElementById("winOrLose");
   const buttons = document.querySelectorAll(".keyrow button");
   const hearts = document.querySelectorAll("ol li");
-  const createLI = document.createElement("li");
-  console.log(hearts);
+  console.log(show.length);
+  console.log(letter.length);
   if (show.length == letter.length) {
     overlay.style.display = "flex";
     overlay.classList.add("win");
+    if (overlay.classList.contains("lose")) {
+      overlay.classList.remove("lose");
+    }
     btnReset.textContent = "Try Again";
     winOrLose.textContent = "You Win!";
     missed = 0;
+    // Removes the phrase
+    for (let i = 0; i < li.length; i++) {
+      ul.removeChild(li[i]);
+    }
+    // Reactivates keyboard
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("chosen");
+      buttons[i].disabled = false;
+    }
+    // Adds new phrase
+    addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+    // Add hearts
+    if (hearts.length == 4) {
+      insertHearts();
+    } else if (hearts.length == 3) {
+      insertHearts();
+      insertHearts();
+    } else if (hearts.length == 2) {
+      insertHearts();
+      insertHearts();
+      insertHearts();
+    } else if (hearts.length == 1) {
+      insertHearts();
+      insertHearts();
+      insertHearts();
+      insertHearts();
+    }
+  } else if (missed >= 5) {
+    overlay.style.display = "flex";
+    overlay.classList.add("lose");
+    btnReset.textContent = "Try Again";
+    winOrLose.textContent = "You Lose!";
+    missed = 0;
+    // Removes the phrase
     for (let i = 0; i < li.length; i++) {
       ul.removeChild(li[i]);
     }
@@ -103,30 +157,15 @@ function checkWin() {
       buttons[i].classList.remove("chosen");
       buttons[i].disabled = false;
     }
-    getRandomPhraseAsArray(phrases2);
+    // Adds new phrase
     addPhraseToDisplay(getRandomPhraseAsArray(phrases));
-    for (let i = 0; i < 6; i++) {
-      scoreboard.appendChild(createLI);
+    // Adds hearts
+    if (hearts.length == 0) {
+      insertHeartsLose();
+      insertHeartsLose();
+      insertHeartsLose();
+      insertHeartsLose();
+      insertHeartsLose();
     }
-  } else if (missed >= 5) {
-    overlay.style.display = "flex";
-    overlay.classList.add("lose");
-    btnReset.textContent = "Try Again";
-    winOrLose.textContent = "You Lose!";
-    getRandomPhraseAsArray(phrases);
-    addPhraseToDisplay(phraseArray);
-    missed = 0;
-    button.classList.add("chosen");
-    button.disabled = true;
-    for (let i = 0; i < letter.length; i++) {
-      letter[i].style.display = "none";
-    }
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].classList.remove("chosen");
-      buttons[i].disabled = false;
-    }
-    // for (let j = 0; j < 6; i++) {
-    //   scoreboard.appendChild(hearts[j]);
-    // }
   }
 }

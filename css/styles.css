@@ -127,6 +127,15 @@ button {
   font-size: var(--font-size-medium);
 }
 
+img {
+  height: 35px;
+  width: 30px;
+}
+
+.right_margin {
+  margin-right: 5px;
+}
+
 /* Overlay */
 
 #overlay {
