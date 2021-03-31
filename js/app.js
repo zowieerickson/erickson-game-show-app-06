@@ -8,11 +8,19 @@ let scoreboard = document.querySelector("#scoreboard ol");
 let missed = 0;
 
 const phrases = [
-  "javascript is awesome",
-  "zowie is swole",
-  "i will become a software developer",
-  "a hundred days of code",
-  "this app is pretty cool",
+  "javascript",
+  "zowie",
+  // "software developer",
+  "coding",
+  // "web development",
+];
+
+const phrases2 = [
+  // "javascript",
+  // "zowie",
+  "software developer",
+  // "coding",
+  "web development",
 ];
 
 btnReset.addEventListener("click", () => {
@@ -76,13 +84,49 @@ keyboard.addEventListener("click", (e) => {
 function checkWin() {
   const show = document.getElementsByClassName("show");
   const letter = document.getElementsByClassName("letter");
-  console.log(show.length);
-  console.log(letter.length);
+  const li = document.querySelectorAll("#phrase ul li");
+  const winOrLose = document.getElementById("winOrLose");
+  const buttons = document.querySelectorAll(".keyrow button");
+  const hearts = document.querySelectorAll("ol li");
+  const createLI = document.createElement("li");
+  console.log(hearts);
   if (show.length == letter.length) {
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
     overlay.classList.add("win");
+    btnReset.textContent = "Try Again";
+    winOrLose.textContent = "You Win!";
+    missed = 0;
+    for (let i = 0; i < li.length; i++) {
+      ul.removeChild(li[i]);
+    }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("chosen");
+      buttons[i].disabled = false;
+    }
+    getRandomPhraseAsArray(phrases2);
+    addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+    for (let i = 0; i < 6; i++) {
+      scoreboard.appendChild(createLI);
+    }
   } else if (missed >= 5) {
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
     overlay.classList.add("lose");
+    btnReset.textContent = "Try Again";
+    winOrLose.textContent = "You Lose!";
+    getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(phraseArray);
+    missed = 0;
+    button.classList.add("chosen");
+    button.disabled = true;
+    for (let i = 0; i < letter.length; i++) {
+      letter[i].style.display = "none";
+    }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("chosen");
+      buttons[i].disabled = false;
+    }
+    // for (let j = 0; j < 6; i++) {
+    //   scoreboard.appendChild(hearts[j]);
+    // }
   }
 }

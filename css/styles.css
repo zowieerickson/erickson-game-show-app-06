@@ -99,6 +99,12 @@ button {
   background-color: #76ce82;
 }
 
+/* WORK ON THIS */
+.shake {
+  transition: all 0.2s ease-in-out;
+  transform: rotate(360deg);
+}
+
 /* Keyboard */
 
 .keyrow {
