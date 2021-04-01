@@ -10,16 +10,8 @@ let missed = 0;
 const phrases = [
   "javascript",
   "zowie",
-  // "software developer",
-  "coding",
-  // "web development",
-];
-
-const phrases2 = [
-  // "javascript",
-  // "zowie",
   "software developer",
-  // "coding",
+  "coding",
   "web development",
 ];
 
